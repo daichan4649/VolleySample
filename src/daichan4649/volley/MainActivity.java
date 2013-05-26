@@ -42,8 +42,8 @@ public class MainActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.use_queue:
-            useQueue();
+        case R.id.use_image_request:
+            useImageRequest();
             return true;
 
         case R.id.use_nw_imageview:
@@ -55,7 +55,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void useQueue() {
+    private void useImageRequest() {
         final ImageView imageView = (ImageView) findViewById(R.id.image_view);
 
         // clear

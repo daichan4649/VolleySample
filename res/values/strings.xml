@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">VolleySample</string>
-    <string name="use_queue">queue</string>
-    <string name="use_nw_imageview">nw imageView</string>
+    <string name="use_image_request">ImageRequest</string>
+    <string name="use_nw_imageview">NetworkImageView</string>
 
 </resources>
