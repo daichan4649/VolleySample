@@ -22,8 +22,9 @@ public class MainActivity extends Activity {
 
     private static final String URL_IMAGE = "http://developer.android.com/design/media/index_landing_page.png";
 
-    private RequestQueue mQueue = null;
     private static final Object TAG = new Object();
+    private RequestQueue mQueue = null;
+    private BitmapCache mCache;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         mQueue = Volley.newRequestQueue(getApplicationContext());
+        mCache = new BitmapCache();
     }
 
     @Override
@@ -86,6 +88,6 @@ public class MainActivity extends Activity {
         imageView.setImageUrl(null, null);
 
         // start load
-        imageView.setImageUrl(URL_IMAGE, new ImageLoader(mQueue, new BitmapCache()));
+        imageView.setImageUrl(URL_IMAGE, new ImageLoader(mQueue, mCache));
     }
 }
