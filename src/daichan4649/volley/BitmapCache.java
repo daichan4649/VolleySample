@@ -7,7 +7,9 @@ import com.android.volley.toolbox.ImageLoader.ImageCache;
 
 public class BitmapCache implements ImageCache {
 
-    private static final int CACHE_SIZE_MAX = 10;
+    /** cache size(Bitmap数) */
+    private static final int CACHE_SIZE_MAX = 5;
+
     private LruCache<String, Bitmap> mCache;
 
     public BitmapCache() {

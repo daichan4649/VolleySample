@@ -4,5 +4,6 @@
     <string name="app_name">VolleySample</string>
     <string name="use_image_request">ImageRequest</string>
     <string name="use_nw_imageview">NetworkImageView</string>
+    <string name="test_listview">ListView</string>
 
 </resources>
