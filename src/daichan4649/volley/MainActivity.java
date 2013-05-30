@@ -5,7 +5,6 @@ import org.apache.http.auth.Credentials;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -112,47 +111,12 @@ public class MainActivity extends FragmentActivity {
         int port = 80;
         String userName = "username";
         String password = "password";
-        Settings settings = new Settings(host, port, userName, password);
-        return createBasicAuthenticationRequestQueue(getApplicationContext(), settings);
-    }
 
-    private static RequestQueue createBasicAuthenticationRequestQueue(Context context, Settings settings) {
-        AuthScope authscope = new AuthScope(settings.getHost(), settings.getPort());
-        Credentials credentials = new UsernamePasswordCredentials(settings.getUserName(), settings.getPassword());
+        AuthScope authscope = new AuthScope(host, port);
+        Credentials credentials = new UsernamePasswordCredentials(userName, password);
         DefaultHttpClient client = new DefaultHttpClient();
         client.getCredentialsProvider().setCredentials(authscope, credentials);
         HttpClientStack stack = new HttpClientStack(client);
-        return Volley.newRequestQueue(context, stack);
-    }
-
-    private static class Settings {
-
-        private String host;
-        private int port;
-        private String userName;
-        private String password;
-
-        public Settings(String host, int port, String userName, String password) {
-            this.host = host;
-            this.port = port;
-            this.userName = userName;
-            this.password = password;
-        }
-
-        public String getHost() {
-            return host;
-        }
-
-        public int getPort() {
-            return port;
-        }
-
-        public String getUserName() {
-            return userName;
-        }
-
-        public String getPassword() {
-            return password;
-        }
+        return Volley.newRequestQueue(getApplicationContext(), stack);
     }
 }
