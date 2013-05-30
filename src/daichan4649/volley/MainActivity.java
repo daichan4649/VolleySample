@@ -1,5 +1,11 @@
 package daichan4649.volley;
 
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.Credentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -14,6 +20,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.NetworkImageView;
@@ -32,7 +39,7 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mQueue = Volley.newRequestQueue(getApplicationContext());
+        mQueue = createRequestQueue();
         mImageLoader = new ImageLoader(mQueue, new BitmapCache());
     }
 
@@ -95,5 +102,57 @@ public class MainActivity extends FragmentActivity {
 
         // start load
         imageView.setImageUrl(URL_IMAGE, mImageLoader);
+    }
+
+    private RequestQueue createRequestQueue() {
+        //        return Volley.newRequestQueue(context);
+
+        // basic authentication
+        String host = "developer.android.com";
+        int port = 80;
+        String userName = "username";
+        String password = "password";
+        Settings settings = new Settings(host, port, userName, password);
+        return createBasicAuthenticationRequestQueue(getApplicationContext(), settings);
+    }
+
+    private static RequestQueue createBasicAuthenticationRequestQueue(Context context, Settings settings) {
+        AuthScope authscope = new AuthScope(settings.getHost(), settings.getPort());
+        Credentials credentials = new UsernamePasswordCredentials(settings.getUserName(), settings.getPassword());
+        DefaultHttpClient client = new DefaultHttpClient();
+        client.getCredentialsProvider().setCredentials(authscope, credentials);
+        HttpClientStack stack = new HttpClientStack(client);
+        return Volley.newRequestQueue(context, stack);
+    }
+
+    private static class Settings {
+
+        private String host;
+        private int port;
+        private String userName;
+        private String password;
+
+        public Settings(String host, int port, String userName, String password) {
+            this.host = host;
+            this.port = port;
+            this.userName = userName;
+            this.password = password;
+        }
+
+        public String getHost() {
+            return host;
+        }
+
+        public int getPort() {
+            return port;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public String getPassword() {
+            return password;
+        }
     }
 }
