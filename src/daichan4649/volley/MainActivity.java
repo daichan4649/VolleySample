@@ -42,7 +42,6 @@ public class MainActivity extends FragmentActivity {
 
         mQueue = Volley.newRequestQueue(getApplicationContext());
         //        mQueue = createRequestQueue4BasicAuthenticate();
-
         mImageLoader = new ImageLoader(mQueue, new BitmapCache());
 
         // ImageRequest
@@ -64,7 +63,6 @@ public class MainActivity extends FragmentActivity {
 
     @SuppressWarnings("unused")
     private RequestQueue createRequestQueue4BasicAuthenticate() {
-        // basic authentication
         String host = "developer.android.com";
         int port = 80;
         String userName = "username";
@@ -105,6 +103,7 @@ public class MainActivity extends FragmentActivity {
         imageView.setImageUrl(URL_IMAGE, mImageLoader);
     }
 
+    // for ListView test
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
