@@ -8,4 +8,4 @@ https://github.com/adamrocker/volley
 - 単独で NetworkImageView
 - ListView で NetworkImageView
 
-![alt text](capture.png)
+<img src="capture.png" alt="capture" width="50%" height="50%">
