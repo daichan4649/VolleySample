@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -38,44 +40,48 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mQueue = createRequestQueue();
+        mQueue = Volley.newRequestQueue(getApplicationContext());
+        //        mQueue = createRequestQueue4BasicAuthenticate();
+
         mImageLoader = new ImageLoader(mQueue, new BitmapCache());
+
+        // ImageRequest
+        findViewById(R.id.load_image_rq).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                executeImageRequest();
+            }
+        });
+
+        // NetworkImageView
+        findViewById(R.id.load_network_image_view).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadNetworkImageView();
+            }
+        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+    @SuppressWarnings("unused")
+    private RequestQueue createRequestQueue4BasicAuthenticate() {
+        // basic authentication
+        String host = "developer.android.com";
+        int port = 80;
+        String userName = "username";
+        String password = "password";
+
+        AuthScope authscope = new AuthScope(host, port);
+        Credentials credentials = new UsernamePasswordCredentials(userName, password);
+        DefaultHttpClient client = new DefaultHttpClient();
+        client.getCredentialsProvider().setCredentials(authscope, credentials);
+        HttpClientStack stack = new HttpClientStack(client);
+        return Volley.newRequestQueue(getApplicationContext(), stack);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.use_image_request:
-            useImageRequest();
-            return true;
-
-        case R.id.use_nw_imageview:
-            useNetworkImageView();
-            return true;
-
-        case R.id.test_listview:
-            Intent intent = new Intent(MainActivity.this, TestListActivity.class);
-            startActivity(intent);
-            return true;
-
-        default:
-            return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void useImageRequest() {
+    private void executeImageRequest() {
         final ImageView imageView = (ImageView) findViewById(R.id.image_view);
-
-        // clear
         imageView.setImageBitmap(null);
 
-        // start load
         Listener<Bitmap> listener = new Listener<Bitmap>() {
             @Override
             public void onResponse(Bitmap result) {
@@ -93,30 +99,28 @@ public class MainActivity extends FragmentActivity {
         mQueue.add(imageRequest);
     }
 
-    private void useNetworkImageView() {
+    private void loadNetworkImageView() {
         NetworkImageView imageView = (NetworkImageView) findViewById(R.id.network_image_view);
-
-        // clear
         imageView.setImageUrl(null, null);
-
-        // start load
         imageView.setImageUrl(URL_IMAGE, mImageLoader);
     }
 
-    private RequestQueue createRequestQueue() {
-        //        return Volley.newRequestQueue(context);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 
-        // basic authentication
-        String host = "developer.android.com";
-        int port = 80;
-        String userName = "username";
-        String password = "password";
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.test_listview:
+            Intent intent = new Intent(MainActivity.this, TestListActivity.class);
+            startActivity(intent);
+            return true;
 
-        AuthScope authscope = new AuthScope(host, port);
-        Credentials credentials = new UsernamePasswordCredentials(userName, password);
-        DefaultHttpClient client = new DefaultHttpClient();
-        client.getCredentialsProvider().setCredentials(authscope, credentials);
-        HttpClientStack stack = new HttpClientStack(client);
-        return Volley.newRequestQueue(getApplicationContext(), stack);
+        default:
+            return super.onOptionsItemSelected(item);
+        }
     }
 }

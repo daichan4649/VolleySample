@@ -1,14 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/use_image_request"
-        android:showAsAction="never"
-        android:title="@string/use_image_request"/>
-    <item
-        android:id="@+id/use_nw_imageview"
-        android:showAsAction="never"
-        android:title="@string/use_nw_imageview"/>
-    <item
         android:id="@+id/test_listview"
         android:showAsAction="never"
         android:title="@string/test_listview"/>

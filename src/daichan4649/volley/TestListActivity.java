@@ -13,6 +13,9 @@ public class TestListActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
         if (savedInstanceState == null) {
             TestListFragment fragment = TestListFragment.newInstance();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

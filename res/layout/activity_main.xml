@@ -4,22 +4,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/text1"
+    <Button
+        android:id="@+id/load_image_rq"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/use_image_request" />
+        android:text="load(ImageRequest)" />
 
     <ImageView
         android:id="@+id/image_view"
         android:layout_width="200dip"
         android:layout_height="200dip" />
 
-    <TextView
-        android:id="@+id/text2"
+    <Button
+        android:id="@+id/load_network_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/use_nw_imageview" />
+        android:text="load(NetworkImageView)" />
 
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/network_image_view"
